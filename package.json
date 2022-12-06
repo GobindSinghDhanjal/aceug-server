@@ -6,11 +6,22 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@adminjs/express": "^5.0.1",
+    "@adminjs/import-export": "^2.0.2",
+    "@adminjs/mongoose": "^3.0.1",
+    "@adminjs/upload": "^3.0.1",
+    "adminjs": "^6.6.5",
+    "connect-pg-simple": "^8.0.0",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "jade": "^0.29.0",
+    "mongoose": "^6.7.2",
+    "morgan": "~1.9.1",
+    "tslib": "^2.4.1"
   }
 }
