@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
+const passport = require("passport");
 
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
@@ -14,6 +15,7 @@ const Lesson = require("./models/lessons");
 const Quiz = require("./models/quiz");
 const Question = require("./models/questions");
 const Course = require("./models/courses");
+const User = require("./models/users");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -93,6 +95,7 @@ const adminOptions = {
       features: [importExportFeature()],
     },
     { resource: Video },
+    { resource: User },
     { resource: Course },
     { resource: Quiz, features: [importExportFeature()] },
     {
@@ -138,6 +141,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/courses", courseRouter);
@@ -154,6 +158,13 @@ connect.then(
   },
   (err) => console.log(err)
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
