@@ -144,13 +144,24 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
 app.use("/courses", courseRouter);
 app.use("/progress", progressRouter);
+
+
+
 
 const mongoose = require("mongoose");
 
 const url = "mongodb+srv://test:test@cluster0.rkd2v8q.mongodb.net/aceug";
 const connect = mongoose.connect(url);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 connect.then(
   (db) => {
@@ -159,12 +170,7 @@ connect.then(
   (err) => console.log(err)
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
 
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
